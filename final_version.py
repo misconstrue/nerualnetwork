@@ -6,7 +6,7 @@ y_trues = []
 test_data = []
 y_tests = []
 
-for i in np.arange(0, 2*np.pi, 0.01):
+for i in np.arange(0, 2*np.pi, 0.02):
     train_data.append(i)
 print(len(train_data))
 
@@ -351,7 +351,7 @@ class NeuralNetwork:
             self.loss_value.append(loss)
             print("epoch: %d loss:%f " % (epoch, loss/len(y_trues)))
 
-            if (loss/len(y_trues)) <= 0.00001:
+            if (loss/len(y_trues)) <= 0.000001:
                 return
 
 if __name__ == '__main__':
@@ -360,21 +360,29 @@ if __name__ == '__main__':
 
     result1 = []
     result2 = []
-    # 使用的是测试数据进行测试
+    result3 = []
+    # 使用训练集画出真值
     for data in train_data:
         result1.append(np.sin(data))
-    for data in test_data:
+    # 使用训练集在神经网络下的拟合
+    for data in train_data:
         result2.append(N.feedforward(data))
+    # 使用测试集在神经网络下的拟合
+    for data in test_data:
+        result3.append(N.feedforward(data))
     plot.figure()
-    plot.subplot(3, 1, 1)
-    plot.title("train_data")
-    plot.plot(train_data, result1, 'ro')
-    plot.subplot(3, 1, 2)
-    plot.title("test_data")
-    plot.plot(test_data, result2, 'bo')
-    plot.subplot(3, 1, 3)
-    plot.title("loss_value")
-    plot.plot(N.epoch, N.loss_value, 'go')
+    plot.subplot(4, 1, 1)
+    plot.title("train_data with function of sin")
+    plot.plot(train_data, result1, linewidth=1.0, color='r')
+    plot.subplot(4, 1, 2)
+    plot.title("train_data with nerualnetwork")
+    plot.plot(train_data, result2, linewidth=1.0, color='b')
+    plot.subplot(4, 1, 3)
+    plot.title("test_data with nerualnetwork")
+    plot.plot(test_data, result3, linewidth=1.0, color='g')
+    plot.subplot(4, 1, 4)
+    plot.title("loss_value change")
+    plot.plot(N.epoch, N.loss_value, linewidth=1.0, color='k')
     plot.show()
 
     print(
@@ -397,65 +405,3 @@ if __name__ == '__main__':
            )
         )
     plot.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
